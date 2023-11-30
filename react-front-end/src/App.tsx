@@ -13,7 +13,7 @@ function App() {
 
   return (
     <>
-      <h1>Test ping result from back end</h1>
+      <h1 className="text-3xl font-bold">Test ping result from back end</h1>
       <button
         onClick={async () => setPingResponseData((await pingServer()).value)}
       >
