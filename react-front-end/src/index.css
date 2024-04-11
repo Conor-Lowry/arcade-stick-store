@@ -3,20 +3,21 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: light dark;
-  color: var(--text-primary);
-  background-color: var(--bg-primary);
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --clr-primary: theme("colors.blue.400");
+  color-scheme: light dark;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+
+  --clr-primary: theme("colors.blue.600");
+  --clr-secondary: theme("colors.amber.700");
 
   --bg-primary: theme("colors.white");
-  --bg-site-banner: theme("colors.blue.100");
-  --bg-primary-gradient: linear-gradient(to bottom, theme("colors.sky.400"), theme("colors.cyan.200"), theme("colors.sky.400"));
+
+  --bg-brand: linear-gradient(to bottom, theme("colors.blue.400"), theme("colors.sky.300"), theme("colors.blue.400"));
 
   --text-primary: theme('colors.black');
 }
@@ -28,10 +29,11 @@ body {
 @media (prefers-color-scheme: dark) {
   :root {
     --clr-primary: theme("colors.blue.700");
+    --clr-secondary: theme("colors.green.400");
 
     --bg-primary: theme("colors.gray.700");
     --bg-site-banner: theme("colors.slate.950");
-    --bg-primary-gradient: linear-gradient(to bottom, theme("colors.slate.900"), theme("colors.blue.950"), theme("colors.slate.900"));
+    --bg-brand: linear-gradient(to bottom, theme("colors.slate.900"), theme("colors.blue.950"), theme("colors.slate.900"));
 
     --text-primary: theme('colors.white');
   }

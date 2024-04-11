@@ -1,42 +1,22 @@
-import {
-  FaSquareEnvelope,
-  FaSquareFacebook,
-  FaSquareGooglePlus,
-  FaSquareTwitter,
-  FaUser,
-  FaSquareYoutube,
-  FaArrowRightToBracket,
-  FaCartShopping,
-} from "react-icons/fa6";
+import { FaUser, FaArrowRightToBracket, FaCartShopping } from "react-icons/fa6";
 import { GiHighKick } from "react-icons/gi";
 import Icon from "../atoms/icon.tsx";
 import { ReactNode, useState } from "react";
 import { DropdownMenu, DropdownMenuWrapper } from "../molecules/dropdown.tsx";
 import Search from "../molecules/search.tsx";
+import { SocialLinks } from "../molecules/social-links.tsx";
 
-const navItemGap = "gap-4";
-//const navBg = "bg-gradient-to-b from-slate-900 via-blue-950 to-slate-900";
-const navBg = "bg-primary-gradient";
+const navBg = "bg-brand";
 const navStyle = `${navBg} py-2 px-6`;
-const iconGap = "gap-2";
+const navButton = "hover:bg-primary";
+const navIconGap = "gap-2";
 
 export default function Header() {
   return (
     <header>
       <UserNav />
       <SiteBanner />
-      <div className={`${navStyle} flex justify-between items-center`}>
-        <Icon className={iconGap}>
-          <GiHighKick />
-          Whiff Punish
-        </Icon>
-        <MainNav />
-        <Search
-          className="px-3 py-1"
-          placeholder="Product search..."
-          ariaLabel="Search products"
-        />
-      </div>
+      <MainNav />
     </header>
   );
 }
@@ -44,37 +24,37 @@ export default function Header() {
 function UserNav() {
   return (
     <nav aria-label="User Menu" className={`${navStyle} flex justify-between`}>
-      <ul className={`${navItemGap} flex`}>
+      <ul className="gap-2 flex">
         <li>
-          <NavItemButton>
+          <NavButton>
             <a href="">
-              <Icon className={iconGap}>
-                <FaUser />
+              <Icon className={navIconGap}>
+                <FaUser string="Sign Up" />
                 Sign up
               </Icon>
             </a>
-          </NavItemButton>
+          </NavButton>
         </li>
         <li>
-          <NavItemButton>
+          <NavButton>
             <a href="">
-              <Icon className={iconGap}>
+              <Icon className={navIconGap}>
                 <FaArrowRightToBracket />
                 Login
               </Icon>
             </a>
-          </NavItemButton>
+          </NavButton>
         </li>
       </ul>
       <span>
-        <NavItemButton>
+        <NavButton>
           <a href="">
-            <Icon className={iconGap}>
+            <Icon className={navIconGap}>
               <FaCartShopping />
               View Cart
             </Icon>
           </a>
-        </NavItemButton>
+        </NavButton>
       </span>
     </nav>
   );
@@ -82,31 +62,44 @@ function UserNav() {
 
 function MainNav() {
   return (
+    <div className={`${navStyle} flex justify-between items-center`}>
+      <Icon className={navIconGap}>
+        <GiHighKick />
+        Whiff Punish
+      </Icon>
+      <MainNavMenu />
+      <Search placeholder="Search products..." ariaLabel="Search products" />
+    </div>
+  );
+}
+
+function MainNavMenu() {
+  return (
     <nav aria-label="Main Menu">
-      <ul className={`${navItemGap} flex`}>
+      <ul className="gap-4 flex">
         <li>
-          <NavItemButton>
+          <NavButton>
             <a href="">Home</a>
-          </NavItemButton>
+          </NavButton>
         </li>
         <li>
-          <Menu
+          <NavDropdownMenu
             itemGroups={[
               {
-                heading: "Types",
+                heading: "By Type",
                 items: ["Arcade Stick Parts", "Arcade Sticks", "All Products"],
               },
               {
-                heading: "Brands",
+                heading: "By Brand",
                 items: ["Hori", "Qanba", "Sanwa", "Seimitsu"],
               },
             ]}
           >
             Products
-          </Menu>
+          </NavDropdownMenu>
         </li>
         <li>
-          <Menu
+          <NavDropdownMenu
             itemGroups={[
               {
                 items: ["Hori", "Qanba", "Sanwa", "Seimitsu"],
@@ -114,40 +107,42 @@ function MainNav() {
             ]}
           >
             Brands
-          </Menu>
+          </NavDropdownMenu>
         </li>
         <li>
-          <NavItemButton>
+          <NavButton>
             <a href="">FAQ</a>
-          </NavItemButton>
+          </NavButton>
         </li>
         <li>
-          <NavItemButton>
+          <NavButton>
             <a href="">About</a>
-          </NavItemButton>
+          </NavButton>
         </li>
       </ul>
     </nav>
   );
 }
 
-function NavItemButton({
+function NavButton({
   children,
-  className,
-  onClick,
+  className = "",
+  onClick = () => {
+    // do nothing
+  },
 }: {
   children: ReactNode;
   className?: string;
   onClick?: () => void;
 }) {
   return (
-    <button className={`p-2.5 hover:bg-primary ${className}`} onClick={onClick}>
+    <button className={`p-2 ${navButton} ${className}`} onClick={onClick}>
       {children}
     </button>
   );
 }
 
-function Menu({
+function NavDropdownMenu({
   children,
   itemGroups,
 }: {
@@ -161,26 +156,24 @@ function Menu({
 
   return (
     <DropdownMenuWrapper isOpen={isOpen} setIsOpen={setIsOpen}>
-      <NavItemButton onClick={() => setIsOpen(!isOpen)}>
-        {children}
-      </NavItemButton>
-      <DropdownMenu className={`${navBg}`}>
+      <NavButton onClick={() => setIsOpen(!isOpen)}>{children}</NavButton>
+      <DropdownMenu className={`${navBg} p-1.5`}>
         {itemGroups.map((group, groupIndex) => (
           <div key={`group-${groupIndex}`}>
             {group.heading && (
               <div
-                className={`italic py-2 font-bold text-center text-green-500`}
+                className={`italic py-1 font-bold text-center text-secondary`}
               >
                 {group.heading}
               </div>
             )}
             {group.items.map((item, itemIndex) => (
-              <NavItemButton
+              <button
                 key={`item-${itemIndex}`}
-                className="w-full min-w-max"
+                className={`p-1 w-full min-w-max ${navButton}`}
               >
                 {item}
-              </NavItemButton>
+              </button>
             ))}
           </div>
         ))}
@@ -191,18 +184,12 @@ function Menu({
 
 function SiteBanner() {
   return (
-    <div className="p-6 text-center bg-[--bg-site-banner]">
-      <h1 className="text-6xl p-2">Whiff Punish</h1>
-      <div className="pb-2 text-lg">
+    <div className="p-6 text-center">
+      <h1 className="text-6xl">Whiff Punish</h1>
+      <div className="pb-1 text-lg">
         Arcade sticks and parts at punishable prices!
       </div>
-      <div className="flex mx-auto w-min text-3xl gap-1">
-        <FaSquareTwitter />
-        <FaSquareGooglePlus />
-        <FaSquareFacebook />
-        <FaSquareYoutube />
-        <FaSquareEnvelope />
-      </div>
+      <SocialLinks className="mx-auto w-min text-3xl" />
     </div>
   );
 }

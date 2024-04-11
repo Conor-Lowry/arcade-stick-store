@@ -1,29 +1,17 @@
 import Icon from "../atoms/icon.tsx";
-import {
-  FaCaretRight,
-  FaSquareEnvelope,
-  FaSquareFacebook,
-  FaSquareGooglePlus,
-  FaSquareTwitter,
-  FaSquareYoutube,
-} from "react-icons/fa6";
+import { FaCaretRight } from "react-icons/fa6";
+import { SocialLinks } from "../molecules/social-links.tsx";
 
 export default function Footer() {
   return (
-    <footer className="bg-primary-gradient py-6 px-8">
+    <footer className="bg-brand py-6 px-8">
       <div className="flex flex-wrap gap-10">
         <div className="py-2">
           <h2 className="text-4xl py-2">Whiff Punish</h2>
           <div>123 Sesame Street,</div>
           <div>Imagination Avenue,</div>
           <div>Fantasy Land</div>
-          <div className="flex gap-1.5 pt-2 text-2xl">
-            <FaSquareTwitter />
-            <FaSquareGooglePlus />
-            <FaSquareFacebook />
-            <FaSquareYoutube />
-            <FaSquareEnvelope />
-          </div>
+          <SocialLinks className="pt-2 text-2xl" />
         </div>
         <Section
           title="Quick Links"
