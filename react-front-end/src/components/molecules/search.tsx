@@ -1,5 +1,6 @@
 import { FaMagnifyingGlass } from "react-icons/fa6";
 
+// TODO Figure out how to reduce the width on smaller screens
 export default function Search({
   placeholder,
   ariaLabel,

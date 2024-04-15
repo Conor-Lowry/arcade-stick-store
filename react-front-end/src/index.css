@@ -13,7 +13,7 @@
   background-color: var(--bg-primary);
 
   --clr-primary: theme("colors.blue.600");
-  --clr-secondary: theme("colors.amber.700");
+  --clr-secondary: theme("colors.green.700");
 
   --bg-primary: theme("colors.white");
 
