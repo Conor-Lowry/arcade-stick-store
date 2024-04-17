@@ -15,9 +15,9 @@ import { SocialLinks } from "../molecules/social-links.tsx";
 import IconWithText from "../atoms/icon-with-text.tsx";
 
 const navBg = "bg-brand";
-const navStyle = `${navBg} p-4 sm:py-2 sm:px-8`;
+const navStyle = `${navBg} py-2 px-8`;
 const navButton = "hover:bg-primary";
-const navIconGap = "gap-2";
+const navIconGap = "gap-4 sm:gap-2";
 const navItems: NavItem[] = [
   {
     text: "Home",
@@ -111,14 +111,16 @@ function MobileHeader() {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
-    <header className={`sm:hidden ${navStyle}`}>
+    <header
+      className={`sm:hidden ${navBg} px-[--horizontal-gutter] py-4 flex flex-col gap-2 text-lg`}
+    >
       <div className={`flex justify-between`}>
-        <SiteLogo className="gap-2" />
+        <SiteLogo className={`${navIconGap} font-bold`} />
         <button onClick={() => setShowMenu(!showMenu)}>
           {showMenu ? <FaX /> : <FaBars />}
         </button>
       </div>
-      {showMenu && <NewMainMenu />}
+      {showMenu && <MobileMainNavMenu />}
     </header>
   );
 }
@@ -183,7 +185,7 @@ function MainNav() {
     <div className={`${navStyle} flex justify-between items-center`}>
       <SiteLogo className={navIconGap} />
       <MainNavMenu />
-      <Search placeholder="Search products..." ariaLabel="Search products" />
+      <Search className="w-[15cqi]" ariaLabel="Search products" />
     </div>
   );
 }
@@ -194,13 +196,39 @@ function SiteLogo({ className = "" }: { className?: string }) {
   );
 }
 
-function NewMainMenu() {
+function MobileMainNavMenu() {
   return (
-    <nav aria-label="Main Menu" className="pt-2">
-      <ul className="flex flex-col gap-2">
+    <nav aria-label="Main Menu" className="contents">
+      <ul className="contents">
+        <li>
+          <a href="">
+            <IconWithText Icon={FaUser} text="Sign up" className={navIconGap} />
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <IconWithText
+              Icon={FaArrowRightToBracket}
+              text="Login"
+              className={navIconGap}
+            />
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <IconWithText
+              Icon={FaCartShopping}
+              text="View Cart"
+              className={navIconGap}
+            />
+          </a>
+        </li>
         {navItems.map((item, index) => {
           return <NavItem item={item} key={index} />;
         })}
+        <li>
+          <Search className="w-full" ariaLabel="Search products" />
+        </li>
       </ul>
     </nav>
   );
@@ -214,10 +242,10 @@ function NavItem({ item, indent = 0 }: { item: NavItem; indent?: number }) {
     case 0:
       break;
     case 1:
-      className = "px-2";
+      className = "px-4";
       break;
     case 2:
-      className = "px-4";
+      className = "px-8";
       break;
     default:
       throw new Error("There should not be more than two nested nav menus");
@@ -226,7 +254,7 @@ function NavItem({ item, indent = 0 }: { item: NavItem; indent?: number }) {
   return (
     <li className={className}>
       {item.href && (
-        <button className="block">
+        <button>
           <a href={item.href}>{item.text}</a>
         </button>
       )}

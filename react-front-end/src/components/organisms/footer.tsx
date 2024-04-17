@@ -4,7 +4,7 @@ import { SocialLinks } from "../molecules/social-links.tsx";
 
 export default function Footer() {
   return (
-    <footer className="bg-brand p-4 sm:p-8">
+    <footer className="bg-brand p-[--horizontal-gutter] sm:p-8">
       <div className="flex flex-col gap-4 sm:flex-row sm:gap-10">
         <div>
           <h2 className="text-3xl sm:text-4xl">Whiff Punish</h2>

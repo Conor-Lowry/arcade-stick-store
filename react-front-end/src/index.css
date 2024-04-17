@@ -12,6 +12,10 @@
   color: var(--text-primary);
   background-color: var(--bg-primary);
 
+  /* Spacing */
+  --horizontal-gutter: theme("space.8");
+
+  /* Theme */
   --clr-primary: theme("colors.blue.600");
   --clr-secondary: theme("colors.green.700");
 

@@ -1,3 +1,4 @@
+/* global require */
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
@@ -15,9 +16,10 @@ export default {
       colors: {
         primary: "var(--clr-primary)",
         secondary: "var(--clr-secondary)",
-        "text-primary": "var(--text-primary)",
+        // Invert naming style to make tailwind classes more readable
+        "primary-text": "var(--text-primary)",
       },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/container-queries")],
 };

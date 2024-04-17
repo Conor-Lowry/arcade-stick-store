@@ -1,20 +1,23 @@
 import { FaMagnifyingGlass } from "react-icons/fa6";
 
-// TODO Figure out how to reduce the width on smaller screens
 export default function Search({
-  placeholder,
   ariaLabel,
+  placeholder,
+  className = "",
+  maxLength,
 }: {
-  placeholder: string;
   ariaLabel: string;
+  placeholder?: string;
+  className?: string;
+  maxLength?: number;
 }) {
   return (
-    <form action="" className="flex">
+    <form className="flex" role="search">
       <input
-        className="px-3 py-1"
+        className={`px-3 py-1 ${className}`}
         type="search"
         placeholder={placeholder}
-        maxLength={30}
+        maxLength={maxLength}
         name="q"
         aria-label={ariaLabel}
       />
