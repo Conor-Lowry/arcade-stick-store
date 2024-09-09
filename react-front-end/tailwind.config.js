@@ -1,5 +1,6 @@
-/* global require */
-/** @type {import('tailwindcss').Config} */
+/** @typedef {import('tailwindcss').Config} TailwindConfig */
+/** @typedef {import('tailwindcss/types/generated/default-theme.js').DefaultTheme} DefaultTheme */
+/** @type {TailwindConfig & {theme: DefaultTheme}} */
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
@@ -21,5 +22,5 @@ export default {
       },
     },
   },
-  plugins: [require("@tailwindcss/container-queries")],
+  plugins: [import("@tailwindcss/container-queries")],
 };

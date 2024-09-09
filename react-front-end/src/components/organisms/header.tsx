@@ -13,6 +13,8 @@ import { DropdownMenu, DropdownMenuWrapper } from "../molecules/dropdown.tsx";
 import Search from "../molecules/search.tsx";
 import { SocialLinks } from "../molecules/social-links.tsx";
 import IconWithText from "../atoms/icon-with-text.tsx";
+import tailwindConfig from "../../../tailwind.config";
+import { useMediaQuery } from "../../hooks.ts";
 
 const navBg = "bg-brand";
 const navStyle = `${navBg} py-2 px-8`;
@@ -98,21 +100,18 @@ const navItems: NavItem[] = [
 ];
 
 export default function Header() {
-  return (
-    <>
-      <MobileHeader />
-      <DesktopHeader />
-    </>
+  const isDesktop = useMediaQuery(
+    `(min-width: ${tailwindConfig.theme.screens.md})`,
   );
+  return isDesktop ? <DesktopHeader /> : <MobileHeader />;
 }
 
-// TODO Add user nav and product search
 function MobileHeader() {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
     <header
-      className={`sm:hidden ${navBg} px-[--horizontal-gutter] py-4 flex flex-col gap-2 text-lg`}
+      className={`${navBg} px-[--horizontal-gutter] py-4 flex flex-col gap-2 text-lg`}
     >
       <div className={`flex justify-between`}>
         <SiteLogo className={`${navIconGap} font-bold`} />
@@ -127,7 +126,7 @@ function MobileHeader() {
 
 function DesktopHeader() {
   return (
-    <header className="hidden sm:block">
+    <header>
       <UserNav />
       <SiteBanner />
       <MainNav />
