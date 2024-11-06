@@ -7,7 +7,7 @@ import {
   FaChevronDown,
   FaX,
 } from "react-icons/fa6";
-import { GiHighKick } from "react-icons/gi";
+
 import { Fragment, ReactNode, useState } from "react";
 import { DropdownMenu, DropdownMenuWrapper } from "../molecules/dropdown.tsx";
 import Search from "../molecules/search.tsx";
@@ -15,12 +15,14 @@ import { SocialLinks } from "../molecules/social-links.tsx";
 import IconWithText from "../atoms/icon-with-text.tsx";
 import tailwindConfig from "../../../tailwind.config";
 import { useMediaQuery } from "../../hooks.ts";
+import { SiteLogo } from "../molecules/site-logo.tsx";
+import { IconType } from "react-icons";
 
 const navBg = "bg-brand";
 const navStyle = `${navBg} py-2 px-8`;
 const navButton = "hover:bg-primary";
 const navIconGap = "gap-4 sm:gap-2";
-const navItems: NavItem[] = [
+const mainNavItems: MainNavItem[] = [
   {
     text: "Home",
     href: "#",
@@ -98,6 +100,23 @@ const navItems: NavItem[] = [
     href: "#",
   },
 ];
+const userNavItems: Record<string, UserNavItem> = {
+  signUp: {
+    text: "Sign Up",
+    href: "",
+    icon: FaUser,
+  },
+  login: {
+    text: "Login",
+    href: "",
+    icon: FaArrowRightToBracket,
+  },
+  viewCart: {
+    text: "View Cart",
+    href: "",
+    icon: FaCartShopping,
+  },
+};
 
 export default function Header() {
   const isDesktop = useMediaQuery(
@@ -143,10 +162,10 @@ function UserNav() {
       <ul className="gap-2 flex flex-col sm:flex-row">
         <li>
           <NavButton>
-            <a href="">
+            <a href={userNavItems.signUp.href}>
               <IconWithText
-                Icon={FaUser}
-                text="Sign up"
+                Icon={userNavItems.signUp.icon}
+                text={userNavItems.signUp.text}
                 className={navIconGap}
               />
             </a>
@@ -154,10 +173,10 @@ function UserNav() {
         </li>
         <li>
           <NavButton>
-            <a href="">
+            <a href={userNavItems.login.href}>
               <IconWithText
-                Icon={FaArrowRightToBracket}
-                text="Login"
+                Icon={userNavItems.login.icon}
+                text={userNavItems.login.text}
                 className={navIconGap}
               />
             </a>
@@ -166,10 +185,10 @@ function UserNav() {
       </ul>
       <span>
         <NavButton>
-          <a href="">
+          <a href={userNavItems.viewCart.href}>
             <IconWithText
-              Icon={FaCartShopping}
-              text="View Cart"
+              Icon={userNavItems.viewCart.icon}
+              text={userNavItems.viewCart.text}
               className={navIconGap}
             />
           </a>
@@ -189,40 +208,38 @@ function MainNav() {
   );
 }
 
-function SiteLogo({ className = "" }: { className?: string }) {
-  return (
-    <IconWithText Icon={GiHighKick} text="Whiff Punish" className={className} />
-  );
-}
-
 function MobileMainNavMenu() {
   return (
     <nav aria-label="Main Menu" className="contents">
       <ul className="contents">
         <li>
-          <a href="">
-            <IconWithText Icon={FaUser} text="Sign up" className={navIconGap} />
-          </a>
-        </li>
-        <li>
-          <a href="">
+          <a href={userNavItems.signUp.href}>
             <IconWithText
-              Icon={FaArrowRightToBracket}
-              text="Login"
+              Icon={userNavItems.signUp.icon}
+              text={userNavItems.signUp.text}
               className={navIconGap}
             />
           </a>
         </li>
         <li>
-          <a href="">
+          <a href={userNavItems.login.href}>
             <IconWithText
-              Icon={FaCartShopping}
-              text="View Cart"
+              Icon={userNavItems.login.icon}
+              text={userNavItems.login.text}
               className={navIconGap}
             />
           </a>
         </li>
-        {navItems.map((item, index) => {
+        <li>
+          <a href={userNavItems.viewCart.href}>
+            <IconWithText
+              Icon={userNavItems.viewCart.icon}
+              text={userNavItems.viewCart.text}
+              className={navIconGap}
+            />
+          </a>
+        </li>
+        {mainNavItems.map((item, index) => {
           return <NavItem item={item} key={index} />;
         })}
         <li>
@@ -233,7 +250,7 @@ function MobileMainNavMenu() {
   );
 }
 
-function NavItem({ item, indent = 0 }: { item: NavItem; indent?: number }) {
+function NavItem({ item, indent = 0 }: { item: MainNavItem; indent?: number }) {
   const [isOpen, setIsOpen] = useState(false);
   let className = "";
 
@@ -399,7 +416,7 @@ function SiteBanner() {
   );
 }
 
-type NavItem = {
+type MainNavItem = {
   text: string;
 } & (
   | {
@@ -408,6 +425,12 @@ type NavItem = {
     }
   | {
       href?: never;
-      children: NavItem[];
+      children: MainNavItem[];
     }
 );
+
+type UserNavItem = {
+  text: string;
+  href: string;
+  icon: IconType;
+};
